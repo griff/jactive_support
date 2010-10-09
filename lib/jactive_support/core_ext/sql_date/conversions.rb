@@ -17,9 +17,9 @@ module JactiveSupport #:nodoc:
         #
         #   my_time = java.sql.Date.new  # => Mon, 12 Nov 2007
         #   my_time.to_date     # => Mon, 12 Nov 2007
-        def to_date
-          ::Date.new(getYear, getMonth, getDay)
-        end
+#        def to_date
+#          ::Date.new(getYear, getMonth, getDay)
+#        end
       end
     end
   end
