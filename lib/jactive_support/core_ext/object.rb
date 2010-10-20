@@ -1,5 +1,1 @@
-class Java::JavaLang::Object
-#  def to_java
-#    self
-#  end
-end
+require 'jactive_support/core_ext/object/enum'

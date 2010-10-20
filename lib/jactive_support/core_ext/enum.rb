@@ -1,11 +1,11 @@
-class java::lang::Enum
-  def self.value_of(value)
+class ::Java::JavaLang::Enum
+  def self.find_value_of(value)
     value = value.to_s
     camel_name = value.camelize
     if(camel_name == value)
-      self.valueOf(self, value)
+      self.valueOf(value)
     else
-      self.getEnumConstants.find {|e| e.name == value || e.name == camel_name}
+      self.java_class.to_java.getEnumConstants.find {|e| e.name == value || e.name == camel_name}
     end
   end
   
