@@ -7,8 +7,11 @@ module JactiveSupport #:nodoc:
           :db           => "yyyy-MM-dd HH:mm:ss.SSS",
           :number       => "YYYMMddHHmmssSSS",
           :time         => "HH:mm",
-          :short        => "%d %b %H:%M",
-          :long         => "%B %d, %Y %H:%M",
+          :full         => lambda { |time, locale| time.class.date_time_instance(:full, :full, locale).format(time) },
+          :long         => lambda { |time, locale| time.class.date_time_instance(:long, :long, locale).format(time) },
+          :medium       => lambda { |time, locale| time.class.date_time_instance(:medium, :medium, locale).format(time) },
+          :short        => lambda { |time, locale| time.class.date_time_instance(:short, :short, locale).format(time) },
+          :default      => lambda { |time, locale| time.class.date_time_instance(:default, :default, locale).format(time) },
           :long_ordinal => lambda { |time| time.format_date("%B #{time.day.ordinalize}, %Y %H:%M") },
           :rfc822       => lambda { |time| time.format_date("%a, %d %b %Y %H:%M:%S #{time.formatted_offset(false)}") },
           :httpdate     => lambda { |time| time.format_date("EEE, dd MMM yyyy HH:mm:ss z", "GMT") }
@@ -45,13 +48,13 @@ module JactiveSupport #:nodoc:
         #   # config/initializers/time_formats.rb
         #   Time::DATE_FORMATS[:month_and_year] = "%B %Y"
         #   Time::DATE_FORMATS[:short_ordinal] = lambda { |time| time.strftime("%B #{time.day.ordinalize}") }
-        def to_formatted_s(format = :db)
+        def to_formatted_s(format = :db, locale=nil)
           return to_default_s unless formatter = self.class::DATE_FORMATS[format]
-          formatter.respond_to?(:call) ? formatter.call(self).to_s : format_date(formatter)
+          formatter.respond_to?(:call) ? (formatter.arity==2 ? formatter.call(self, locale) : formatter.call(self)).to_s : format_date(formatter)
         end
         
-        def format_date(format, timezone=nil)
-          formatter = ::Java::JavaText::SimpleDateFormat.new(format)
+        def format_date(format, timezone=nil, locale=nil)
+          formatter = ::Java::JavaText::SimpleDateFormat.new(format, locale.to_locale)
           timezone = ::Java::JavaUtil::TimeZone.getTimeZone(timezone) unless timezone.nil? || timezone.is_a?(::Java::JavaUtil::TimeZone)
           formatter.setTimeZone(timezone) if timezone
           formatter.format(self)

@@ -8,6 +8,12 @@ class Java::JavaUtil::Locale
   end
 end
 
+class NilClass
+  def to_locale
+    Java::JavaUtil::Locale.getDefault
+  end
+end
+
 class String
   # Returns the java.util.Locale that maches this string
   def to_locale
