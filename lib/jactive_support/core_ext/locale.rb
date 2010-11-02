@@ -6,6 +6,10 @@ class Java::JavaUtil::Locale
   def human_name
     getDisplayLanguage(I18n.locale.to_locale)
   end
+  
+  def inspect
+    "Locale[#{human_name}]"
+  end
 end
 
 class NilClass
