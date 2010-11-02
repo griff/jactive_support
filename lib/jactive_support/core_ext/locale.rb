@@ -10,6 +10,10 @@ class Java::JavaUtil::Locale
   def inspect
     "Locale[#{human_name}]"
   end
+  
+  def to_sym
+    to_s.to_sym
+  end
 end
 
 class NilClass
