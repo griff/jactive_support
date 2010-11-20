@@ -1,4 +1,8 @@
 class Java::JavaUtil::Locale
+  def self.current_locale
+    Java::JavaUtil::Locale.getDefault
+  end
+  
   def to_locale
     self
   end
@@ -18,7 +22,7 @@ end
 
 class NilClass
   def to_locale
-    Java::JavaUtil::Locale.getDefault
+    Java::JavaUtil::Locale.current_locale
   end
 end
 
