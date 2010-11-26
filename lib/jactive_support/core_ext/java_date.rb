@@ -1,6 +1,6 @@
 require 'active_support/core_ext/time/behavior'
-require 'jactive_support/core_ext/date/calculations'
-require 'jactive_support/core_ext/date/conversions'
+require 'jactive_support/core_ext/java_date/calculations'
+require 'jactive_support/core_ext/java_date/conversions'
 
 class Java::JavaUtil::Date
   include ActiveSupport::CoreExtensions::Time::Behavior
