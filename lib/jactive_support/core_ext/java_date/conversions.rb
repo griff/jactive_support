@@ -122,6 +122,10 @@ module JactiveSupport #:nodoc:
           to_time.to_datetime
         end
         
+        def to_sql_date
+          java.sql.Date.new(getTime)
+        end
+        
         def httpdate
           to_formatted_s(:httpdate)
         end
