@@ -5,15 +5,19 @@ module JactiveSupport #:nodoc:
       module Conversions
         DATE_FORMATS = {
           :db           => "yyyy-MM-dd",
+          :i18n         => lambda { |clazz, locale| 
+                              format = I18n.translate(:"formats.date", :default=>'')
+                              !format.blank? ? clazz.pattern_formatter(format) : clazz.date_instance(:default, locale)
+                            },
           :number       => "YYYMMdd",
-          :full         => lambda { |time, locale| time.class.date_instance(:full, locale).format(time) },
-          :long         => lambda { |time, locale| time.class.date_instance(:long, locale).format(time) },
-          :medium       => lambda { |time, locale| time.class.date_instance(:medium, locale).format(time) },
-          :short        => lambda { |time, locale| time.class.date_instance(:short, locale).format(time) },
-          :default      => lambda { |time, locale| time.class.date_instance(:default, locale).format(time) },
-          :long_ordinal => lambda { |time| time.format_date("%B #{time.day.ordinalize}, %Y %H:%M") },
-          :rfc822       => lambda { |time| time.format_date("%a, %d %b %Y %H:%M:%S #{time.formatted_offset(false)}") },
-          :httpdate     => lambda { |time| time.format_date("EEE, dd MMM yyyy HH:mm:ss z", "GMT") }
+          :full         => lambda { |clazz, locale| clazz.date_instance(:full, locale) },
+          :long         => lambda { |clazz, locale| clazz.date_instance(:long, locale) },
+          :medium       => lambda { |clazz, locale| clazz.date_instance(:medium, locale) },
+          :short        => lambda { |clazz, locale| clazz.date_instance(:short, locale) },
+          :default      => lambda { |clazz, locale| clazz.date_instance(:default, locale) },
+          :long_ordinal => lambda { |clazz| clazz.pattern_formatter("%B #{time.day.ordinalize}, %Y %H:%M") },
+          :rfc822       => lambda { |clazz| clazz.pattern_formatter("%a, %d %b %Y %H:%M:%S #{time.formatted_offset(false)}") },
+          :httpdate     => lambda { |clazz| clazz.pattern_formatter("EEE, dd MMM yyyy HH:mm:ss z", "GMT") }
         }
         
         # Converts a java.sql.Date object to a ruby Date.

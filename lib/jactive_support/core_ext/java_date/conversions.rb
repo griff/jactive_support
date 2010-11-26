@@ -5,22 +5,49 @@ module JactiveSupport #:nodoc:
       module Conversions
         DATE_FORMATS = {
           :db           => "yyyy-MM-dd HH:mm:ss.SSS",
+          :i18n         => lambda { |clazz, locale| 
+                              format = I18n.translate(:"formats.timestamp", :default=>'')
+                              !format.blank? ? clazz.pattern_formatter(format) : clazz.date_time_instance(:default, :default, locale)
+                            },
           :number       => "YYYMMddHHmmssSSS",
           :time         => "HH:mm",
-          :full         => lambda { |time, locale| time.class.date_time_instance(:full, :full, locale).format(time) },
-          :long         => lambda { |time, locale| time.class.date_time_instance(:long, :long, locale).format(time) },
-          :medium       => lambda { |time, locale| time.class.date_time_instance(:medium, :medium, locale).format(time) },
-          :short        => lambda { |time, locale| time.class.date_time_instance(:short, :short, locale).format(time) },
-          :default      => lambda { |time, locale| time.class.date_time_instance(:default, :default, locale).format(time) },
-          :long_ordinal => lambda { |time| time.format_date("%B #{time.day.ordinalize}, %Y %H:%M") },
-          :rfc822       => lambda { |time| time.format_date("%a, %d %b %Y %H:%M:%S #{time.formatted_offset(false)}") },
-          :httpdate     => lambda { |time| time.format_date("EEE, dd MMM yyyy HH:mm:ss z", "GMT") }
+          :full         => lambda { |clazz, locale| clazz.date_time_instance(:full, :full, locale) },
+          :long         => lambda { |clazz, locale| clazz.date_time_instance(:long, :long, locale) },
+          :medium       => lambda { |clazz, locale| clazz.date_time_instance(:medium, :medium, locale) },
+          :short        => lambda { |clazz, locale| clazz.date_time_instance(:short, :short, locale) },
+          :default      => lambda { |clazz, locale| clazz.date_time_instance(:default, :default, locale) },
+          :long_ordinal => lambda { |clazz| clazz.pattern_formatter("%B #{time.day.ordinalize}, %Y %H:%M") },
+          :rfc822       => lambda { |clazz| clazz.pattern_formatter("%a, %d %b %Y %H:%M:%S #{time.formatted_offset(false)}") },
+          :httpdate     => lambda { |clazz| clazz.pattern_formatter("EEE, dd MMM yyyy HH:mm:ss z", "GMT") }
         }
 
-        def self.included(base) #:nodoc:
-          base.class_eval do
+        def self.included(other) #:nodoc:
+          other.class_eval do
             alias_method :to_default_s, :to_s
             alias_method :to_s, :to_formatted_s
+          end
+          other.extend ClassMethods
+        end
+
+        module ClassMethods
+          def format(format=:i18n, locale=nil)
+            return format(:default, locale) unless formatter = self::DATE_FORMATS[format]
+            locale = locale.to_locale
+            formatter = formatter.respond_to?(:call) ? (formatter.arity==2 ? formatter.call(self, locale) : formatter.call(self)) : self.pattern_formatter(formatter)
+            formatter.to_pattern
+          end
+
+          def formatter(format=:i18n, locale=nil)
+            return formatter(:default, locale) unless formatter = self::DATE_FORMATS[format]
+            locale = locale.to_locale
+            formatter.respond_to?(:call) ? (formatter.arity==2 ? formatter.call(self, locale) : formatter.call(self)) : self.pattern_formatter(formatter)
+          end
+
+          def pattern_formatter(pattern, timezone=nil, locale=nil)
+            formatter = ::Java::JavaText::SimpleDateFormat.new(pattern, locale.to_locale)
+            timezone = ::Java::JavaUtil::TimeZone.getTimeZone(timezone) unless timezone.nil? || timezone.is_a?(::Java::JavaUtil::TimeZone)
+            formatter.setTimeZone(timezone) if timezone
+            formatter
           end
         end
 
@@ -48,18 +75,24 @@ module JactiveSupport #:nodoc:
         #   # config/initializers/time_formats.rb
         #   Time::DATE_FORMATS[:month_and_year] = "%B %Y"
         #   Time::DATE_FORMATS[:short_ordinal] = lambda { |time| time.strftime("%B #{time.day.ordinalize}") }
-        def to_formatted_s(format = :db, locale=nil)
+        def to_formatted_s(format=:i18n, locale=nil)
           return to_default_s unless formatter = self.class::DATE_FORMATS[format]
-          formatter.respond_to?(:call) ? (formatter.arity==2 ? formatter.call(self, locale) : formatter.call(self)).to_s : format_date(formatter)
+          locale = locale.to_locale
+          formatter = formatter.respond_to?(:call) ? (formatter.arity==2 ? formatter.call(self.class, locale) : formatter.call(self.class)) : self.class.pattern_formatter(formatter)
+          (formatter.respond_to?(:format) ? formatter.format(self) : formatter).to_s
         end
         
-        def format_date(format, timezone=nil, locale=nil)
-          formatter = ::Java::JavaText::SimpleDateFormat.new(format, locale.to_locale)
-          timezone = ::Java::JavaUtil::TimeZone.getTimeZone(timezone) unless timezone.nil? || timezone.is_a?(::Java::JavaUtil::TimeZone)
-          formatter.setTimeZone(timezone) if timezone
-          formatter.format(self)
+        def format(format=:i18n, locale=nil)
+          self.class.format(format, locale)
+        end
+        
+        def formatter(format=:i18n, locale=nil)
+          self.class.formatter(format, locale)
         end
 
+        def pattern_formatter(pattern, timezone=nil, locale=nil)
+          self.class.pattern_formatter(pattern, timezone, locale)
+        end
 
         # Converts a java.util.Date object to a ruby Date, dropping hour, minute, and second precision.
         #
