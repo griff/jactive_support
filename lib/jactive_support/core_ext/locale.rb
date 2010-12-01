@@ -1,3 +1,4 @@
+Locale = Java::JavaUtil::Locale
 class Java::JavaUtil::Locale
   def self.current_locale
     Java::JavaUtil::Locale.getDefault
@@ -8,7 +9,10 @@ class Java::JavaUtil::Locale
   end
   
   def human_name
-    getDisplayLanguage(I18n.locale.to_locale)
+    l = I18n.locale.to_locale
+    display_country = country.blank? ? "" : " (#{getDisplayCountry(l)})"
+    display_variant = variant.blank? ? "" : " - #{getDisplayVariant(l)}"
+    "#{getDisplayLanguage(l)}#{display_country}#{display_variant}"
   end
   
   def inspect
