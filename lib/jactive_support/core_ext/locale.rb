@@ -9,7 +9,8 @@ class Java::JavaUtil::Locale
   end
   
   def human_name
-    l = I18n.locale.to_locale
+    #puts "Human name #{I18n.locale.to_locale} #{Locale.current_locale}"
+    l = Locale.current_locale
     display_country = country.blank? ? "" : " (#{getDisplayCountry(l)})"
     display_variant = variant.blank? ? "" : " - #{getDisplayVariant(l)}"
     "#{getDisplayLanguage(l)}#{display_country}#{display_variant}"
