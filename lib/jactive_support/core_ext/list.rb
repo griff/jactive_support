@@ -20,4 +20,8 @@ module java::util::List
     args.each{|a| add(a)}
     self
   end
+
+  def last
+    self.get(size-1) if size > 0 
+  end
 end
