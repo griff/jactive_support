@@ -18,3 +18,8 @@ class Java::JavaUtil::Date
     self
   end
 end
+class String
+  def to_java_date
+    to_datetime.to_java_date
+  end
+end
