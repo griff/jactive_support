@@ -21,6 +21,22 @@ module JactiveSupport #:nodoc:
           end
           cal.getTime
         end
+        
+        def age(since=java.util.Date.new)
+          difference(:years, since)
+        end
+        
+        def difference(field=:years, since=java.util.Date.new)
+          local_date = ::Java::OrgJodaTime::LocalDate.fromDateFields(self)
+          since_date = ::Java::OrgJodaTime::LocalDate.fromDateFields(since)
+          if field == :days
+            return ::Java::OrgJodaTime::Days.daysBetween(local_date, since_date).getDays
+          elsif field == :months
+            return ::Java::OrgJodaTime::Months.monthsBetween(local_date, since_date).getMonths
+          else
+            return ::Java::OrgJodaTime::Years.yearsBetween(local_date, since_date).getYears
+          end
+        end
       end
     end
   end
