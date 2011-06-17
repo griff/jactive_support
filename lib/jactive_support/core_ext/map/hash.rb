@@ -3,7 +3,6 @@ module JactiveSupport #:nodoc:
     module Map #:nodoc:
       module Hash
         def self.included(other_mod)
-          other_mod.send :alias_method, :each_pair, :each
           other_mod.send :alias_method, :has_key?, :contains_key?
           other_mod.send :alias_method, :key?, :has_key?
           other_mod.send :alias_method, :include?, :has_key?
@@ -11,6 +10,20 @@ module JactiveSupport #:nodoc:
           other_mod.send :alias_method, :has_value?, :contains_value?
           other_mod.send :alias_method, :value?, :has_value?
           other_mod.send :alias_method, :update, :merge!
+        end
+        
+        def each
+          entry_set.each do |e|
+            yield [e.key, e.value]
+          end
+          self
+        end
+        
+        def each_pair
+          entry_set.each do |e|
+            yield e.key, e.value
+          end
+          self
         end
         
         def contains_key?(key)
