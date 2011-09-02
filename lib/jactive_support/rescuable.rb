@@ -1,7 +1,7 @@
+require 'active_support/rescuable'
+
 module ActiveSupport
-  # Rescuable module adds support for easier exception handling.
   module Rescuable
-    
     module ClassMethods
       def rescue_from(*klasses, &block)
         options = klasses.extract_options!

@@ -1,5 +1,5 @@
 module JactiveSupport #:nodoc:
-  module CoreExtensions #:nodoc:
+  module JavaExtensions #:nodoc:
     module Date #:nodoc:
       # Converting dates to formatted strings, times, and datetimes.
       module Conversions
@@ -122,7 +122,7 @@ module JactiveSupport #:nodoc:
           to_time.to_datetime
         end
         
-        def to_sql_date
+        def to_java_sqldate
           java.sql.Date.new(getTime)
         end
         

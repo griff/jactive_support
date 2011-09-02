@@ -1,3 +1,5 @@
+require 'active_support/inflector'
+
 module ActiveSupport
   module Inflector
     def constantize_with_jruby(camel_cased_word)

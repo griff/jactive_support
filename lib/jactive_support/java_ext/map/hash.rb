@@ -147,10 +147,6 @@ module JactiveSupport #:nodoc:
         def dup
           clone
         end
-        
-        def to_java_map
-          self
-        end
       end
     end
   end

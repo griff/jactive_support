@@ -20,13 +20,13 @@ module JactiveSupport #:nodoc:
           :httpdate     => lambda { |clazz| clazz.pattern_formatter("EEE, dd MMM yyyy HH:mm:ss z", "GMT") }
         }
         
-        # Converts a java.sql.Date object to a ruby Date.
-        #
-        #   my_time = java.sql.Date.new  # => Mon, 12 Nov 2007
-        #   my_time.to_date     # => Mon, 12 Nov 2007
-#        def to_date
-#          ::Date.new(getYear, getMonth, getDay)
-#        end
+        def to_java_sqldate
+          self
+        end
+        
+        def acts_like_time?
+          false
+        end
       end
     end
   end

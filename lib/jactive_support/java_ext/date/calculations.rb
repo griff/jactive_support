@@ -1,5 +1,5 @@
 module JactiveSupport #:nodoc:
-  module CoreExtensions #:nodoc:
+  module JavaExtensions #:nodoc:
     module Date #:nodoc:
       module Calculations
         CALCULATION_FIELDS = {

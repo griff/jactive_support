@@ -1,4 +1,4 @@
-class Java::JavaLang::Number
+class java::lang::Number
   def self.number_format_instance(format=:default, locale=nil)
     case format
     when :number then ::Java::JavaText::NumberFormat.getNumberInstance(locale.to_locale)
@@ -37,48 +37,42 @@ class Java::JavaLang::Number
   end
 end
 
-class Numeric
-  def to_formatted_s(format=:default, locale=nil)
-    self.to_java.to_formatted_s(format, locale)
-  end
-end
-
-class Java::JavaLang::Byte
+class java::lang::Byte
   #alias :to_default_s :to_s
   #alias :to_s :to_formatted_s
   
   alias :to_primitive :byte_value
 end
 
-class Java::JavaLang::Short
+class java::lang::Short
   #alias :to_default_s :to_s
   #alias :to_s :to_formatted_s
 
   alias :to_primitive :short_value
 end
 
-class Java::JavaLang::Integer
+class java::lang::Integer
   #alias :to_default_s :to_s
   #alias :to_s :to_formatted_s
 
   alias :to_primitive :int_value
 end
 
-class Java::JavaLang::Long
+class java::lang::Long
   #alias :to_default_s :to_s
   #alias :to_s :to_formatted_s
 
   alias :to_primitive :long_value
 end
 
-class Java::JavaLang::Float
+class java::lang::Float
   #alias :to_default_s :to_s
   #alias :to_s :to_formatted_s
 
   alias :to_primitive :float_value
 end
 
-class Java::JavaLang::Double
+class java::lang::Double
   #alias :to_default_s :to_s
   #alias :to_s :to_formatted_s
 

@@ -9,7 +9,7 @@ module java::lang::Iterable
     end
   end
 =begin comment
-  JRuby already contains a simular expression
+  JRuby already contains a similar expression
   def each
     it = iterator
     while it.next?
@@ -24,7 +24,17 @@ module java::lang::Iterable
     end
     self
   end
-  alias :reject! :delete_if
+  
+  def reject!
+    ret = nil
+    iterate do |it,ob|
+      if yield(ob)
+        it.remove 
+        ret = self
+      end
+    end
+    ret
+  end
   
   def clear
     iterate {|it, o| it.remove}
