@@ -38,6 +38,34 @@ module java::lang::Iterable
     ret
   end
   
+  def shift(*args)
+    raise ArgumentError, "wrong # of arguments(#{args.size} for 1)" if args.size > 1
+    raise FrozenError, "can't modify frozen iterable" if frozen?
+    it = iterator
+    if args.size == 1
+      n = args.first
+      raise TypeError, "Can't convert #{n} into Integer" unless n.respond_to?(:to_int)
+      n = n.to_int
+      raise TypeError, "#to_int should return Integer" unless n.kind_of?(Integer)
+      raise ArgumentError, "negative array size" if n < 0
+      ret = []
+      while n > 0 && it.next?
+        ret << it.next
+        it.remove
+        n -= 1
+      end
+      ret
+    elsif it.next?
+      ret = it.next 
+      it.remove
+      ret
+    end
+  end
+  
+  def empty?
+    !iterator.next?
+  end
+  
   def clear
     raise FrozenError, "can't modify frozen iterable" if frozen?
     iterate {|it, o| it.remove}
