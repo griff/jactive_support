@@ -2,6 +2,10 @@ class java::util::Locale
   def self.current_locale
     self.getDefault
   end
+
+  def self.current_locale=(l)
+    self.setDefault(l.to_locale)
+  end
   
   def to_locale
     self
