@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.name        = "jactive_support"
   s.platform    = Gem::Platform::CURRENT
   s.version     = JActiveSupport::VERSION
-  s.authors     = ["Brian Olsen"]
-  s.email       = ["brian@maven-group.org"]
+  s.author      = "Brian Olsen"
+  s.email       = "brian@maven-group.org"
   s.homepage    = "http://github.com/griff/jactive_support"
   s.summary     = "Extensions to add some activesupport flavor to java classes"
   s.description = %q{Extensions to add some activesupport flavor to java classes}
