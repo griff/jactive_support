@@ -1,4 +1,4 @@
-require 'jactive_suport/java_ext/enum'
+require 'jactive_support/java_ext/enum'
 
 module JactiveSupport #:nodoc:
   module CoreExtensions #:nodoc:
