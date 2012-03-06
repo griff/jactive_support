@@ -12,6 +12,14 @@ module JactiveSupport #:nodoc:
           other_mod.send :alias_method, :update, :merge!
         end
         
+        def [](key)
+          get(key)
+        end
+        
+        def []=(key,val)
+          put(key,val)
+        end
+        
         def each
           entry_set.each do |e|
             yield [e.key, e.value]
