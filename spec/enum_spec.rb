@@ -1,6 +1,6 @@
 require 'java'
 require 'active_support'
-require 'jactive_support/core_ext/enum_compare'
+require 'jactive_support/core_ext/enum'
 
 describe 'enum' do
 
