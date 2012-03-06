@@ -11,7 +11,13 @@ end
 class String
   # Returns the java.util.Locale that maches this string
   def to_locale
-    java::util::Locale.new(self)
+    if self =~ /^(.+)[-_](.+)[-_](.+)$/
+      java::util::Locale.new($1, $2, $3)
+    elsif self =~ /^(.+)[-_](.+)$/
+      java::util::Locale.new($1, $2)
+    else
+      java::util::Locale.new(self)
+    end
   end
 end
 
