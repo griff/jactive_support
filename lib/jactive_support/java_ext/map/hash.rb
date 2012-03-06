@@ -115,7 +115,12 @@ module JactiveSupport #:nodoc:
               put(key, newval)
             end
           else
-            put_all(other_hash.to_java_map)
+            if other_hash.respond_to? :to_java_map
+              other_hash = other_hash.to_java_map
+            elsif other_hash.respond_to? :to_hash
+              other_hash = other_hash.to_hash
+            end
+            put_all(other_hash)
           end
           self
         end
