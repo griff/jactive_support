@@ -1,3 +1,5 @@
+require 'jactive_support/java_ext/locale'
+
 Locale = java::util::Locale
 
 class NilClass
