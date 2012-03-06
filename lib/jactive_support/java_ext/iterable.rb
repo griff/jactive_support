@@ -1,7 +1,10 @@
+require 'jactive_support/java_ext/iterator'
+
 module java::lang::Iterable
   #include Enumerable JRuby already does this
   
   def iterate
+    return enum_for(:iterate) unless block_given?
     it = iterator
     while it.next?
       ob = it.next
@@ -19,6 +22,7 @@ module java::lang::Iterable
 =end
 
   def delete_if
+    return enum_for(:delete_if) unless block_given?
     iterate do |it,ob|
       it.remove if yield(ob)
     end
@@ -26,6 +30,7 @@ module java::lang::Iterable
   end
   
   def reject!
+    return enum_for(:reject!) unless block_given?
     ret = nil
     iterate do |it,ob|
       if yield(ob)
