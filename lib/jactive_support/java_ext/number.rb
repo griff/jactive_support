@@ -11,12 +11,12 @@ class java::lang::Number
   end
   
   NUMBER_FORMATS = {
-    :number => lambda {|time, locale| number_format_instance(:number, locale).format(time.to_primitive)},
-    :currency => lambda {|time, locale| number_format_instance(:currency, locale).format(time.to_primitive)},
-    :percent => lambda {|time, locale| number_format_instance(:percent, locale).format(time.to_primitive)},
-    :scientific => lambda {|time, locale| number_format_instance(:scientific, locale).format(time.to_primitive)},
-    :integer => lambda {|time, locale| number_format_instance(:integer, locale).format(time.to_primitive)},
-    :default => lambda {|time, locale| number_format_instance(:default, locale).format(time.to_primitive)},
+    :number => lambda {|value, locale| number_format_instance(:number, locale).format(value.to_primitive)},
+    :currency => lambda {|value, locale| number_format_instance(:currency, locale).format(value.to_primitive)},
+    :percent => lambda {|value, locale| number_format_instance(:percent, locale).format(value.to_primitive)},
+    :scientific => lambda {|value, locale| number_format_instance(:scientific, locale).format(value.to_primitive)},
+    :integer => lambda {|value, locale| number_format_instance(:integer, locale).format(value.to_primitive)},
+    :default => lambda {|value, locale| number_format_instance(:default, locale).format(value.to_primitive)},
   }
   
   def to_formatted_s(format=:default, locale=nil)
