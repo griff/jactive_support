@@ -1,8 +1,8 @@
 module java::util::Iterator
   def has_next?
-    has_next
+    hasNext
   end
   def next?
-    has_next
+    hasNext
   end
 end
