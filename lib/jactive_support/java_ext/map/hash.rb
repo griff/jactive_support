@@ -1,5 +1,5 @@
 module JactiveSupport #:nodoc:
-  module CoreExtensions #:nodoc:
+  module JavaExtensions #:nodoc:
     module Map #:nodoc:
       module Hash
         def self.included(other_mod)
