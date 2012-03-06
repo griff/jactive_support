@@ -21,6 +21,10 @@ class java::util::Locale
   def inspect
     "Locale[#{human_name}]"
   end
+
+  def to_str
+    to_s
+  end
   
   def to_sym
     to_s.to_sym
