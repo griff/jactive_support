@@ -1,6 +1,12 @@
 require 'jactive_support/java_ext/list_iterator'
 
 module java::util::List
+  if RUBY_VERSION >= '1.9'
+    FrozenError = RuntimeError
+  else
+    FrozenError = TypeError
+  end
+  
   def inspect
     content = map{|e| e.inspect}.join(', ')
     "JavaList[#{content}]"
@@ -16,6 +22,7 @@ module java::util::List
   end  
 
   def map!
+    raise FrozenError, "can't modify frozen iterable" if frozen?
     return enum_for(:map!) unless block_given?
     iterate{|it, ob| it.set(yield(ob))}
     self
@@ -23,6 +30,7 @@ module java::util::List
   alias :collect! :map!
   
   def push(*args)
+    raise FrozenError, "can't modify frozen iterable" if frozen? && ( RUBY_VERSION >= '1.9' || args.size > 0 )
     args.each{|a| add(a)}
     self
   end
@@ -47,4 +55,11 @@ module java::util::List
       self.get(size-1) 
     end
   end
+  
+  def clear
+    raise FrozenError, "can't modify frozen list" if frozen?
+    super
+    self
+  end
+  
 end
