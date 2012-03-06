@@ -1,3 +1,5 @@
+require 'jactive_support/java_ext/list_iterator'
+
 module java::util::List
   def inspect
     content = map{|e| e.inspect}.join(', ')
@@ -5,6 +7,7 @@ module java::util::List
   end
 
   def iterate
+    return enum_for(:iterate) unless block_given?
     it = listIterator
     while it.next?
       ob = it.next
@@ -12,16 +15,36 @@ module java::util::List
     end
   end  
 
-  def map!(&block)
+  def map!
+    return enum_for(:map!) unless block_given?
     iterate{|it, ob| it.set(yield(ob))}
+    self
   end
+  alias :collect! :map!
   
   def push(*args)
     args.each{|a| add(a)}
     self
   end
 
-  def last
-    self.get(size-1) if size > 0 
+  def last(*args)
+    raise ArgumentError, "wrong # of arguments(#{args.size} for 1)" if args.size > 1
+    if args.size == 1
+      n = args.first
+      raise TypeError, "Can't convert #{n} into Integer" unless n.respond_to?(:to_int)
+      n = n.to_int
+      raise TypeError, "#to_int should return Integer" unless n.kind_of?(Integer)
+      raise ArgumentError, "negative array size" if n < 0
+
+      it = listIterator(size)
+      ret = []
+      while n > 0 && it.previous?
+        ret.unshift it.previous
+        n -= 1
+      end
+      ret
+    elsif size > 0 
+      self.get(size-1) 
+    end
   end
 end
