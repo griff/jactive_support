@@ -1,9 +1,7 @@
-require 'active_support/core_ext/time/behavior'
 require 'jactive_support/java_ext/date/calculations'
 require 'jactive_support/java_ext/date/conversions'
 
 class java::util::Date
-  include ActiveSupport::CoreExtensions::Time::Behavior
   include JactiveSupport::JavaExtensions::Date::Calculations
   include JactiveSupport::JavaExtensions::Date::Conversions
 
