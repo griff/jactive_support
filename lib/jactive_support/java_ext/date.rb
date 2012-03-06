@@ -19,6 +19,10 @@ class java::util::Date
     :default => DEFAULT_STYLE
   }
   
+  def acts_like_time?
+    true
+  end
+  
   def self.date_time_instance(date_style=:default, time_style=:default, locale=nil)
     java::text::DateFormat.getDateTimeInstance(STYLE[date_style], STYLE[time_style], locale.to_locale)
   end
