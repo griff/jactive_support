@@ -1,5 +1,5 @@
 module JactiveSupport #:nodoc:
-  module CoreExtensions #:nodoc:
+  module JavaExtensions #:nodoc:
     module SqlDate #:nodoc:
       # Converting dates to formatted strings, times, and datetimes.
       module Conversions
