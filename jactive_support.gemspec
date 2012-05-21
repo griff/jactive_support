@@ -4,7 +4,6 @@ require "jactive_support/version"
 
 Gem::Specification.new do |s|
   s.name        = "jactive_support"
-  s.platform    = Gem::Platform::CURRENT
   s.version     = JActiveSupport::VERSION
   s.author      = "Brian Olsen"
   s.email       = "brian@maven-group.org"
