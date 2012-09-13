@@ -1,3 +1,5 @@
+require 'active_support/core_ext/object/blank'
+
 class java::util::Locale
   def self.current_locale
     self.getDefault

@@ -1,3 +1,5 @@
+require 'active_support/core_ext/object/blank'
+
 module JactiveSupport #:nodoc:
   module JavaExtensions #:nodoc:
     module SqlDate #:nodoc:
