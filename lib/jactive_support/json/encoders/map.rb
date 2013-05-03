@@ -1,4 +1,4 @@
-module Java::JavaUtil::Map #:nodoc:
+module java::util::Map #:nodoc:
   # Returns a JSON string representing the hash.
   #
   # Without any +options+, the returned JSON string will include all
