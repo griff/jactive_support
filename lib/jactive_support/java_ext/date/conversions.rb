@@ -11,15 +11,15 @@ module JactiveSupport #:nodoc:
                               format = I18n.translate(:"formats.timestamp", :default=>'')
                               !format.blank? ? clazz.pattern_formatter(format) : clazz.date_time_instance(:default, :default, locale)
                             },
-          :number       => "YYYMMddHHmmssSSS",
+          :number       => "yyyyMMddHHmmssSSS",
           :time         => "HH:mm",
           :full         => lambda { |clazz, locale| clazz.date_time_instance(:full, :full, locale) },
           :long         => lambda { |clazz, locale| clazz.date_time_instance(:long, :long, locale) },
           :medium       => lambda { |clazz, locale| clazz.date_time_instance(:medium, :medium, locale) },
           :short        => lambda { |clazz, locale| clazz.date_time_instance(:short, :short, locale) },
           :default      => lambda { |clazz, locale| clazz.date_time_instance(:default, :default, locale) },
-          :long_ordinal => lambda { |clazz| clazz.pattern_formatter("%B #{time.day.ordinalize}, %Y %H:%M") },
-          :rfc822       => lambda { |clazz| clazz.pattern_formatter("%a, %d %b %Y %H:%M:%S #{time.formatted_offset(false)}") },
+          :long_ordinal => lambda { |clazz| clazz.pattern_formatter("MMMMMM #{time.day.ordinalize}, yyyy HH:mm") },
+          :rfc822       => lambda { |clazz| clazz.pattern_formatter("EEE, dd MMM yyyy HH:mm:ss Z") },
           :httpdate     => lambda { |clazz| clazz.pattern_formatter("EEE, dd MMM yyyy HH:mm:ss z", "GMT", "EN") }
         }
 
