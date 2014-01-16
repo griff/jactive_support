@@ -1,4 +1,5 @@
 require 'active_support/rescuable'
+require 'jactive_support/java_blamable'
 
 module ActiveSupport
   module Rescuable
