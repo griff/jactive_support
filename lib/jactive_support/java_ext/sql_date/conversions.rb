@@ -18,7 +18,7 @@ module JactiveSupport #:nodoc:
           :short        => lambda { |clazz, locale| clazz.date_instance(:short, locale) },
           :default      => lambda { |clazz, locale| clazz.date_instance(:default, locale) },
           :long_ordinal => lambda { |clazz| clazz.pattern_formatter("MMMMMM #{time.day.ordinalize}, yyyy HH:mm") },
-          :rfc822       => lambda { |clazz| clazz.pattern_formatter("EEE, dd MMM yyyy HH:mm:ss Z") },
+          :rfc822       => "EEE, dd MMM yyyy HH:mm:ss Z",
           :httpdate     => lambda { |clazz| clazz.pattern_formatter("EEE, dd MMM yyyy HH:mm:ss z", "GMT", "EN") }
         }
         
