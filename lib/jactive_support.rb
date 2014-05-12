@@ -1,3 +1,4 @@
+require 'active_support'
 require 'jactive_support/version'
 require 'jactive_support/java_ext'
 require 'jactive_support/core_ext'
