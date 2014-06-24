@@ -4,7 +4,7 @@ require "jactive_support/version"
 
 Gem::Specification.new do |s|
   s.name        = "jactive_support"
-  s.version     = JActiveSupport::VERSION
+  s.version     = JactiveSupport::VERSION
   s.author      = "Brian Olsen"
   s.email       = "brian@maven-group.org"
   s.homepage    = "http://github.com/griff/jactive_support"

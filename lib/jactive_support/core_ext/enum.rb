@@ -24,7 +24,7 @@ module JactiveSupport #:nodoc:
           begin
             other.find_value_of(self)
           rescue java::lang::IllegalArgumentException => e
-            raise TypeError, e.cause.message
+            raise TypeError, e.message
           end
         else
           to_java_without_enum(other)

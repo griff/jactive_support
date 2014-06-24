@@ -1,3 +1,3 @@
-module JActiveSupport
-  VERSION = "2.1.1"
+module JactiveSupport
+  VERSION = "3.0.0.pre1"
 end
