@@ -3,7 +3,7 @@ require 'jactive_support/java_ext/date/conversions'
 class java::sql::Date
   DATE_FORMATS = {
     :db           => "yyyy-MM-dd",
-    :i18n         => lambda { |clazz, locale| clazz.i18n_formatter(locale) },
+    :i18n         => lambda { |clazz, locale| clazz.i18n_formatter(locale: locale) },
     :number       => "yyyyMMdd",
     :full         => lambda { |clazz, locale| clazz.date_instance(:full, locale) },
     :long         => lambda { |clazz, locale| clazz.date_instance(:long, locale) },
