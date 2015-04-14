@@ -16,8 +16,8 @@ class NilClass #:nodoc:
   end
 end
 
-class String
-  def <=>(b)
-    b.nil? ? 1 : super
+class String #:nodoc:
+  def <=>(other)
+    other.nil? ? 1 : super;
   end
 end
